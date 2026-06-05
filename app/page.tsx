@@ -11,7 +11,7 @@ export default function Home() {
   const [recentTopics, setRecentTopics] = useState<string[]>([]);
   const resultsRef = useRef<HTMLDivElement>(null);
 
-  // Fetch recent topics on load
+ 
   const loadRecentTopics = async () => {
     try {
       const res = await fetch("/api/cache");
@@ -26,7 +26,7 @@ export default function Home() {
 
   const deleteRecentTopic = async (topicToRemove: string) => {
     try {
-      // Clear the main view if the user deletes the currently active debate
+ 
       if (topic === topicToRemove && result) {
         setResult(null);
         setTopic("");
@@ -38,7 +38,7 @@ export default function Home() {
         body: JSON.stringify({ topic: topicToRemove }),
       });
 
-      // Refresh the list after successful deletion
+   
       loadRecentTopics();
     } catch (e) {
       console.error("Failed to delete topic:", e);
