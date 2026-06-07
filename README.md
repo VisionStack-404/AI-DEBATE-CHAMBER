@@ -16,7 +16,7 @@ An elegant, real-time debate arena where frontier Large Language Models clash on
   * **CON Argument**: Powered by **Claude 3 Haiku** (a fast, analytical, and highly critical model).
   * **Moderator Synthesis**: Powered by **Gemini 2.5 Flash** (impartial, balanced, and objective).
 * **🎨 Premium Glassmorphic Design**: A premium dark-mode interface built with harmonious color gradients, modern typography (Geist), sleek card borders, micro-animations, and a completely responsive layout.
-* **⚡ Intelligent Caching & Speed**: Implements in-memory caching to instantly load previously generated debates.
+* **⚡ Intelligent Caching & Speed**: Implements an in-memory caching layer to instantly load previously generated debates.
 * **💬 Interactive Debate Chatbot**: Engage with a dedicated moderator chatbot to ask follow-up questions, dive deeper into specific points, or critique arguments.
 
 ---
