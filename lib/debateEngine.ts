@@ -1,6 +1,4 @@
-// -----------------------------
-// 🔹 OPENROUTER CALLER (Claude, Llama, Gemini)
-// -----------------------------
+
 async function callOpenRouter(
   model: string,
   system: string,
@@ -41,15 +39,11 @@ async function callOpenRouter(
   }
 }
 
-// -----------------------------
-// 🔥 MAIN ORCHESTRATION
-// -----------------------------
 
-// Simple In-Memory Cache
 export const debateCache = new Map<string, { pro: string; con: string; summary: string }>();
 
 export async function runDebate(topic: string) {
-  // Check the cache first
+
   const normalizedTopic = topic.trim().toLowerCase();
   if (debateCache.has(normalizedTopic)) {
     console.log(`[Cache Hit] Returning cached debate for: "${topic}"`);
@@ -109,7 +103,7 @@ Adhere strictly to this exact format:
 Maintain a neutral, objective, and authoritative tone. Ensure your total response is strictly under 120 words.
 `;
 
-  // 🔥 Parallel execution
+  
   const [pro, con] = await Promise.all([
     callOpenRouter(PRO_MODEL, proSystem, topic, 0.5),
     callOpenRouter(CON_MODEL, conSystem, topic, 0.7),
