@@ -354,4 +354,3 @@ If you find **AI Debate Chamber** interesting:
 *Advancing the future of AI dialogue, one debate at a time.*
 
 </div>
-the first pull request2
