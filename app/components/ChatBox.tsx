@@ -61,7 +61,7 @@ export default function ChatBox({ debateContext }: { debateContext: string }) {
                     <h3 className="text-xl font-bold text-gradient-accent from-cyan-400 to-blue-400">Discuss this Debate</h3>
                 </div>
 
-                {/* Message Area */}
+                {/* Message Areas */}
                 <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
                     {messages.length === 0 ? (
                         <div className="h-full flex flex-col items-center justify-center text-slate-400 opacity-70">
