@@ -8,7 +8,7 @@ export default function ChatBox({ debateContext }: { debateContext: string }) {
     const [loading, setLoading] = useState(false);
     const endOfMessagesRef = useRef<HTMLDivElement>(null);
 
-    // Auto-scroll to latest message
+   
     useEffect(() => {
         endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
