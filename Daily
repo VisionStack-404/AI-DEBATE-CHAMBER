@@ -8,3 +8,11 @@ hi
 - Added a lightweight health-check endpoint and an end-to-end integration test that runs in CI; resolved a startup race condition and added retry logic for flaky external calls.
 - Updated repository documentation: expanded the README with local development and contribution steps, added CI status badge, and documented the new health-check and test procedures.
 - Next steps: implement canary-style deployments and basic metrics/alerting, extend n8n workflows to trigger integration tests on PR labels, and add scheduled dependency updates with automated PRs.
+
+## 2026-08-30
+
+### Project Update
+
+- Began implementing a canary deployment prototype: added a new GitHub Actions workflow template that performs staged deploys to a "canary" environment, includes an optional traffic-weight simulation step (curl-based load generator script), and supports a toggleable feature-flag config file to control gradual rollouts.
+- Improved observability and CI checks: instrumented the health-check and core endpoints with Prometheus-compatible metrics (request count, error count, latency buckets) and exposed a /metrics endpoint; added structured JSON logging for key startup and error paths and a lightweight metrics smoke test to the integration CI job.
+- Documentation and next steps: documented the canary workflow and rollback checklist in the README, added example Helm/kubectl placeholders and usage notes for on-call engineers, and opened follow-up issues to (1) integrate a service-mesh or traffic router for real weight-based traffic shifting, (2) add automated alerting tied to canary metrics, and (3) secure secrets for deploy credentials and enable scheduled dependency-update PR automation.
