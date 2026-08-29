@@ -1,1 +1,10 @@
-undefined hi
+hi
+
+## 2026-08-29
+
+### Project Update
+
+- Refactored the GitHub Actions CI: split lint, unit tests, and build into distinct jobs, added dependency caching for faster runs, and introduced a Python-version matrix to catch cross-version issues earlier.
+- Added a lightweight health-check endpoint and an end-to-end integration test that runs in CI; resolved a startup race condition and added retry logic for flaky external calls.
+- Updated repository documentation: expanded the README with local development and contribution steps, added CI status badge, and documented the new health-check and test procedures.
+- Next steps: implement canary-style deployments and basic metrics/alerting, extend n8n workflows to trigger integration tests on PR labels, and add scheduled dependency updates with automated PRs.
