@@ -26,3 +26,14 @@ hi
 - Enhanced canary test coverage and tooling: introduced a deterministic traffic simulator that exercises feature-flagged routes under controlled traffic weights and a CI smoke test that validates metrics emission and structured logs. Also added stub tests and issues to track future service-mesh (Istio/linkerd) integration for real-weight routing.
 - Operational improvements and runbook updates: expanded the rollback and on-call runbook with steps to inspect metrics, evaluate the validator output, manually promote/cut traffic, and collect troubleshooting artifacts (logs, traces, metric snapshots). Included example kubectl/helm commands and sample Prometheus alert rules to help first responders.
 - Next steps: wire the metric-evaluator to alerting channels for automated paging thresholds, add a scheduled job to run dependency-update PRs, and build the full traffic-router integration to enable true weighted traffic shifting and more realistic canary experiments.
+
+## 2026-09-01
+
+### Project Update
+
+- Alerting integration prototype: added a GitHub Actions step that forwards canary-evaluator failures to Alertmanager-compatible webhooks and a thin PagerDuty/Slack notifier action for on-call notification. The workflow sends structured evaluation details (error rates, p95, sample traces) so responders have context before they join an incident.
+- Scheduled dependency updates: added a scheduled Actions workflow template (weekly) that opens dependency-update PRs using the repository's maintainer bot credentials; PRs include changelog excerpts, CI status, and an automated label for downstream test runs. This complements the planned Dependabot/renovate approach with a configurable GH CLI fallback.
+- Secrets and runtime retrieval: replaced ad-hoc secret scripts with a HashiCorp Vault Action integration in workflows to fetch short-lived deploy tokens at runtime and cache them per-job. Added documentation for token renewal and a small helper script to rotate Vault AppRole credentials during local testing.
+- CI robustness and flakiness reduction: implemented exponential-backoff retry wrappers for networked integration tests and added a short, deterministic end-to-end smoke test that runs before metric evaluation to fail fast on obvious startup regressions.
+- Documentation and runbook updates: expanded the README with alerting setup steps, example Alertmanager receiver configs, and a short troubleshooting checklist for canary failures. Added a template PR checklist for dependency updates to guide reviewers and automated checks.
+- Next steps: (1) connect Alertmanager to a persistent alerting channel and add escalation policies, (2) iterate on metric-evaluator thresholds with simulated fault injections to reduce false positives, and (3) prototype integrating a lightweight traffic router (linkerd demo) in CI to validate real weighted-shift behavior in the canary pipeline.
