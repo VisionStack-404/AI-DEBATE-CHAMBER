@@ -44,3 +44,16 @@ hi
 - Artifact collection and post-mortem readiness: workflow now archives canary metric snapshots, structured log excerpts, and representative trace spans as build artifacts for each canary run. Added a lightweight artifact-validation step to ensure key telemetry is present before evaluation proceeds.
 - Follow-up tasks opened: created issues to (1) formalize escalation policies and PagerDuty schedules, (2) integrate the experimental linkerd demo into a dedicated CI lane, and (3) add long-term support for multi-cluster canaries. Assigned owners and tentative milestones in the issue tracker.
 - Immediate next actions: connect staging Alertmanager to persistent channels, iterate threshold settings with additional simulated faults to reduce brittle alerts, and continue stabilizing the linkerd demo so it can be promoted from experimental to an opt-in CI job.
+
+## 2026-09-02
+
+### Project Update
+
+- Connected staging Alertmanager to a persistent Slack receiver and validated PagerDuty webhook formatting with synthetic evaluator-failure payloads; confirmed structured evaluation details (error rates, p95, sample traces) are included in notifications to give on-call context.
+- Drafted and added an escalation-policy template to the runbook and created placeholders for PagerDuty schedules and escalation timings; added a short checklist for first responders to ensure consistent triage steps during canary alerts.
+- Performed additional threshold tuning using the deterministic traffic simulator: ran multiple fault-injection scenarios (spike latency, sustained error bursts, and mixed load) and updated default error-rate and p95 thresholds. Recorded the tuning rationale and added per-service threshold overrides in the evaluator config.
+- Promoted the linkerd demo workflow into a dedicated, opt-in CI lane: refactored the demo into its own Actions workflow, added resource/time gating to limit run duration, and introduced a PR label that triggers the demo runs when maintainers request deeper canary validation.
+- Hardened Vault rotation and CI secret handling: exercised the AppRole rotation helper in CI, added token-expiry alerts for CI jobs, and improved retry/backoff around Vault API calls to reduce transient failures during token refresh.
+- Improved the dependency-update workflow: added automated changelog extraction into PR bodies, applied a "security" label for critical updates, and added a downstream integration test job that blocks auto-merge until basic integration checks pass.
+- Documentation updates and runbook refinements: expanded the README and on-call runbook with step-by-step Alertmanager hookup instructions, escalation flow diagrams, and a short playbook for promoting a successful canary to a broader rollout.
+- Next steps: (1) finalize production PagerDuty schedules and escalation timing, (2) run longer-duration simulated experiments to validate thresholds against more diverse fault modes, and (3) stabilize the linkerd demo so it can be promoted from experimental to a supported CI lane.
