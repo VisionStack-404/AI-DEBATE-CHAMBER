@@ -67,3 +67,15 @@ hi
   - Minor CI polish: tagged canary-related workflow artifacts with a timestamped prefix for easier retrieval and updated workflow metadata to expose a "canary-run-id" output for downstream automation and runbook references.
   - Opened follow-up issues to (1) review soak experiment findings and propose threshold adjustments, (2) finalize PagerDuty schedules with on-call owners, and (3) define resource-limit templates for the linkerd demo to reduce flakiness in CI.
   - Immediate next tasks: review soak results with the SRE team, iterate on the evaluator thresholds based on collected artifacts, and land the PagerDuty schedule proposal for on-call review.
+
+## 2026-09-03
+
+### Project Update
+
+- Reviewed soak-experiment artifacts with SRE and summarized findings: confirmed gradual p95 drift under sustained memory pressure and intermittent error spikes during GC-heavy scenarios; opened a PR to add per-service threshold overrides and documented the recommended evaluator config changes.
+- Implemented canary-run correlation improvements: propagated canary-run-id into workflow outputs, log labels, and metric dimensions; added a small CLI helper to locate artifacts and traces by run id and updated artifact naming to include the run-id prefix for easier retrieval.
+- Delivered a reusable "regression-bisect" workflow template (opt-in): the template can be invoked from failing canary runs to perform a constrained binary search across a configured commit window to help narrow suspect commits. Safeguards include manual approvals, time limits, and resource caps; template and usage notes added to the README.
+- Stabilized the linkerd demo lane: tuned container resource limits, increased readiness probe timeouts, and added KinD startup waits and retry logic which reduced observed flakiness in experimental runs. Also added an early smoke-check that skips the demo if cluster resource checks fail.
+- Extended PR-label automation and n8n integration: enhanced the PR-label-driven demo trigger to validate label source and author permissions before launching the demo; updated the sample PR and n8n workflow to include a brief pre-check and annotates the PR with expected artifact locations.
+- Documentation and runbook updates: added a "how to use regression-bisect" troubleshooting section, documented canary-run-id retrieval and artifact lookup steps, and included guidance for interpreting bisect results in the on-call runbook.
+- Next steps: pilot the regression-bisect workflow on a few historical failures to validate efficacy, finalize per-service evaluator thresholds after another soak-analysis pass, and circulate the PagerDuty schedule proposal for reviewer sign-off.
