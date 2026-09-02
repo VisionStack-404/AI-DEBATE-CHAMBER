@@ -57,3 +57,13 @@ hi
 - Improved the dependency-update workflow: added automated changelog extraction into PR bodies, applied a "security" label for critical updates, and added a downstream integration test job that blocks auto-merge until basic integration checks pass.
 - Documentation updates and runbook refinements: expanded the README and on-call runbook with step-by-step Alertmanager hookup instructions, escalation flow diagrams, and a short playbook for promoting a successful canary to a broader rollout.
 - Next steps: (1) finalize production PagerDuty schedules and escalation timing, (2) run longer-duration simulated experiments to validate thresholds against more diverse fault modes, and (3) stabilize the linkerd demo so it can be promoted from experimental to a supported CI lane.
+
+- Additional actions and findings (added 2026-09-02):
+  - Began drafting a concrete production PagerDuty rotation and on-call schedule proposal; opened an issue with proposed shifts, escalation timings, and a request for volunteer owners to review before finalizing.
+  - Started a series of longer-duration soak experiments (multi-hour runs) in an isolated staging environment to validate threshold stability under sustained mixed-load patterns; archived metric snapshots and noted initial observations (gradual p95 drift under steady memory pressure scenarios).
+  - Fixed a metrics-smoke-test bug where high-cardinality labels caused evaluator count mismatches; added a unit test and a small aggregation step to normalize label dimensions before evaluation.
+  - Added a short "how to trigger linkerd demo" section to the README and created a sample PR demonstrating the PR-label-driven demo run and expected artifact outputs for maintainers.
+  - Improved troubleshooting notes for Vault token TTL mismatches (common during local testing) and added a helper script to inspect AppRole token metadata to speed local debugging.
+  - Minor CI polish: tagged canary-related workflow artifacts with a timestamped prefix for easier retrieval and updated workflow metadata to expose a "canary-run-id" output for downstream automation and runbook references.
+  - Opened follow-up issues to (1) review soak experiment findings and propose threshold adjustments, (2) finalize PagerDuty schedules with on-call owners, and (3) define resource-limit templates for the linkerd demo to reduce flakiness in CI.
+  - Immediate next tasks: review soak results with the SRE team, iterate on the evaluator thresholds based on collected artifacts, and land the PagerDuty schedule proposal for on-call review.
