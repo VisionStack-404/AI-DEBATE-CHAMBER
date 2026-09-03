@@ -79,3 +79,16 @@ hi
 - Extended PR-label automation and n8n integration: enhanced the PR-label-driven demo trigger to validate label source and author permissions before launching the demo; updated the sample PR and n8n workflow to include a brief pre-check and annotates the PR with expected artifact locations.
 - Documentation and runbook updates: added a "how to use regression-bisect" troubleshooting section, documented canary-run-id retrieval and artifact lookup steps, and included guidance for interpreting bisect results in the on-call runbook.
 - Next steps: pilot the regression-bisect workflow on a few historical failures to validate efficacy, finalize per-service evaluator thresholds after another soak-analysis pass, and circulate the PagerDuty schedule proposal for reviewer sign-off.
+
+## 2026-09-04
+
+### Project Update
+
+- Piloted the regression-bisect workflow on three historical canary failures: runs completed using constrained commit windows, produced candidate commit ranges, and archived bisect artifacts. Opened follow-up issues linking bisect outputs and artifacts for targeted investigation; tuned the default commit-window sizing and approval cadence based on runtime observations.
+- Finalized evaluator threshold updates after an additional soak-analysis pass: committed per-service overrides and updated evaluator config docs. Added a small calibration utility that computes baseline percentiles from archived metrics to help teams set service-specific p95 and error-rate thresholds; included unit tests for the calibration logic.
+- Circulated the PagerDuty schedule proposal to SRE and on-call leads and collected initial feedback: updated proposed rotations and escalation timings, created an issue for formal sign-off, and added reviewers to solicit availability for proposed shifts.
+- Improved artifact retrieval tooling: enhanced the canary-run-id CLI helper with a list-artifacts subcommand that queries the GH Actions API, filters by run-id, and downloads matched artifacts into a structured local directory. Added usage examples to the README to speed post-mortem workflows.
+- Reduced linkerd demo flakiness further: added a KinD preflight capacity check that skips the demo run when node resources are insufficient, adjusted demo resource templates, and increased probe timeouts. These changes lowered the number of aborted experimental runs in the opt-in lane.
+- CI and workflow robustness: added a gating check in the canary evaluation workflow to verify required telemetry files are present before running the evaluator; introduced a small artifact-validation unit test and fixed an edge-case in label normalization that previously caused evaluator mismatches.
+- Documentation and runbook updates: expanded the README with regression-bisect examples, artifact lookup recipes, and a short checklist for using the calibration utility. Updated the on-call runbook with a recommended triage flow for bisect outputs.
+- Next steps: run the regression-bisect workflow across a broader set of historical failures to validate effectiveness, finalize PagerDuty sign-off and publish schedules, and promote the evaluator calibration utility into a scheduled job to assist threshold maintenance.
