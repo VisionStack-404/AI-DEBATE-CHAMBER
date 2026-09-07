@@ -123,3 +123,13 @@ hi
 - Implemented automated rollback dry-run workflow: created a workflow that simulates the rollback sequence (artifact collection, runbook steps, and notification hooks) against a staging canary to validate the rollback playbook and ensure all diagnostic artifacts are captured during a rollback scenario. Documented the dry-run in the runbook and added a short checklist for maintainers to run the simulation.
 - Documentation and small tooling updates: updated the README and on-call runbook with calibration-preview usage, debug-mode guidance, and rollback-dry-run instructions. Added examples showing how to review Checks UI diffs and link to archived dashboards from PRs.
 - Next steps: monitor soak and calibration-preview outputs for a week to measure suggestion quality, finalize PagerDuty schedule sign-offs with on-call owners, iterate on anomaly filters informed by debug artifacts, and plan a limited roll-out of calibration-preview to additional services once reviewer feedback is collected.
+
+## 2026-09-08
+
+### Project Update
+
+- Launched a small, controlled pilot for calibration-preview across three low-risk services: added a repository-level "calibration:pilot" label and a feature-flag gate that enables preview reports only for pilot-tagged services and PRs. This reduces noise while collecting targeted reviewer feedback.
+- Improved reviewer UX in CI: extended the Checks UI renderer to include inline summary cards (baseline sample counts, percent-change highlights, and a link to the archived dashboard) and added automated checklist population when a preview report is produced. Added unit tests for the renderer and end-to-end smoke checks for the Checks API integration.
+- Strengthened artifact traceability: updated the canary-run-id helper to surface pilot-status metadata and to attach the calibration-preview snapshot links directly to generated draft PRs or check runs. This makes it faster for reviewers to inspect supporting telemetry before approving threshold changes.
+- Hardening and tests: added integration tests that exercise preview generation, noise-band suppression, and PR checklist population in dry-run mode; added a runtime feature-flag toggle and documentation for team leads to join the pilot or opt their services out.
+- Outcomes and next directions: initial pilot runs produced fewer low-confidence suggestions and provided actionable reviewer comments; opened issues to (1) expand the pilot to two additional services next week, (2) finalize PagerDuty schedule sign-off with on-call owners, and (3) iterate on anomaly filters using debug-mode artifacts observed during pilot evaluations. Planned to monitor pilot feedback and calibration-preview PR acceptance over the next two weeks before wider rollout.
